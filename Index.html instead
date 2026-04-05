@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>StudyCoin (STC)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0d1b2a;
+      color: white;
+      text-align: center;
+    }
+    header {
+      padding: 40px;
+      background: #1b263b;
+    }
+    h1 {
+      font-size: 40px;
+      margin: 0;
+    }
+    p {
+      font-size: 18px;
+    }
+    section {
+      padding: 40px;
+    }
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      margin: 10px;
+      background: #e0a800;
+      color: black;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+    footer {
+      padding: 20px;
+      background: #1b263b;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>StudyCoin (STC)</h1>
+  <p>Learn. Earn. Achieve.</p>
+  <p>Launching 2027</p>
+</header>
+
+<section>
+  <h2>About</h2>
+  <p>StudyCoin is a student-focused crypto project that rewards learning, quizzes, and academic progress.</p>
+</section>
+
+<section>
+  <h2>Vision</h2>
+  <p>To make education more engaging and rewarding using blockchain technology.</p>
+</section>
+
+<section>
+  <h2>Roadmap</h2>
+  <p>2026: Development & Community</p>
+  <p>2027: Testing & Launch</p>
+</section>
+
+<section>
+  <h2>Join Community</h2>
+  <a href="#" class="btn">Telegram</a>
+  <a href="#" class="btn">Twitter</a>
+</section>
+
+<footer>
+  <p>© 2026 StudyCoin Project</p>
+</footer>
+
+</body>
+</html>
