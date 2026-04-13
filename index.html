@@ -25,6 +25,155 @@ button {
   color: white;
   cursor: pointer;
 }
+input {
+  padding: 8px;
+  margin: 5px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>💰 StudyCoin</h1>
+
+<div id="auth">
+  <h2>Login / Signup</h2>
+  <input id="username" placeholder="Username"><br>
+  <button onclick="login()">Login</button>
+</div>
+
+<div id="app" style="display:none;">
+  <h2>Welcome, <span id="user"></span></h2>
+  <h3>Balance: <span id="balance">0</span> STC</h3>
+
+  <div class="box">
+    <h3 id="question">Click Start</h3>
+    <input id="answer" placeholder="Your answer">
+    <br>
+    <button onclick="submitAnswer()">Submit</button>
+    <p id="result"></p>
+    <p id="timer"></p>
+  </div>
+
+  <button onclick="startQuiz()">Start Question</button>
+</div>
+
+<script>
+
+// Questions
+const questions = [
+  {q:"2+2", a:"4", reward:0.10},
+  {q:"5×5", a:"25", reward:0.10},
+  {q:"Capital of UK?", a:"london", reward:0.10},
+  {q:"H2O is?", a:"water", reward:0.10},
+  {q:"12×12", a:"144", reward:0.10},
+  {q:"Square root of 81?", a:"9", reward:0.10}
+];
+
+let current;
+let timeLeft;
+let timer;
+let currentUser;
+
+// LOGIN SYSTEM
+function login() {
+  let username = document.getElementById("username").value;
+  if(!username) return alert("Enter username");
+
+  currentUser = username;
+
+  if(!localStorage.getItem(username)) {
+    localStorage.setItem(username, 0);
+  }
+
+  document.getElementById("auth").style.display = "none";
+  document.getElementById("app").style.display = "block";
+  document.getElementById("user").innerText = username;
+
+  updateBalance();
+}
+
+// Load balance
+function updateBalance() {
+  let balance = localStorage.getItem(currentUser);
+  document.getElementById("balance").innerText = balance;
+}
+
+// Start quiz
+function startQuiz() {
+  current = questions[Math.floor(Math.random()*questions.length)];
+  document.getElementById("question").innerText = current.q;
+  document.getElementById("result").innerText = "";
+  document.getElementById("answer").value = "";
+
+  timeLeft = 10;
+  startTimer();
+}
+
+// Timer
+function startTimer() {
+  clearInterval(timer);
+  timer = setInterval(() => {
+    document.getElementById("timer").innerText = "Time: " + timeLeft;
+    timeLeft--;
+
+    if(timeLeft < 0) {
+      clearInterval(timer);
+      document.getElementById("result").innerText = "❌ Time up!";
+    }
+  }, 1000);
+}
+
+// Submit answer
+function submitAnswer() {
+  clearInterval(timer);
+
+  let userAnswer = document.getElementById("answer").value.toLowerCase();
+  let balance = parseFloat(localStorage.getItem(currentUser));
+
+  if(userAnswer === current.a) {
+    balance += current.reward;
+    localStorage.setItem(currentUser, balance);
+
+    document.getElementById("result").innerText =
+      "✅ Correct! +0.10 STC";
+  } else {
+    document.getElementById("result").innerText = "❌ Wrong!";
+  }
+
+  updateBalance();
+}
+
+</script>
+
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>StudyCoin</title>
+<style>
+body {
+  font-family: Arial;
+  text-align: center;
+  background: #0f172a;
+  color: white;
+}
+.box {
+  background: #1e293b;
+  padding: 20px;
+  margin: 20px;
+  border-radius: 10px;
+}
+button {
+  padding: 10px;
+  margin: 10px;
+  border: none;
+  border-radius: 5px;
+  background: #22c55e;
+  color: white;
+  cursor: pointer;
+}
 </style>
 </head>
 
