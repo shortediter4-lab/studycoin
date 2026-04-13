@@ -1,4 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>StudyCoin</title>
+<style>
+body {
+  font-family: Arial;
+  text-align: center;
+  background: #0f172a;
+  color: white;
+}
+.box {
+  background: #1e293b;
+  padding: 20px;
+  margin: 20px;
+  border-radius: 10px;
+}
+button {
+  padding: 10px;
+  margin: 10px;
+  border: none;
+  border-radius: 5px;
+  background: #22c55e;
+  color: white;
+  cursor: pointer;
+}
+</style>
+</head>
 
+<body>
+
+<h1>💰 StudyCoin</h1>
+<h2>Balance: <span id="balance">0</span> STC</h2>
+
+<div class="box">
+  <h3 id="question">Click Start</h3>
+  <input id="answer" placeholder="Your answer">
+  <br>
+  <button onclick="submitAnswer()">Submit</button>
+  <p id="result"></p>
+  <p id="timer"></p>
+</div>
+
+<button onclick="startQuiz()">Start Question</button>
+
+<script>
+
+// Questions with difficulty
+const questions = [
+  {q:"2+2", a:"4", reward:0.5},
+  {q:"5×5", a:"25", reward:0.5},
+  {q:"Capital of UK?", a:"London", reward:1},
+  {q:"H2O is?", a:"water", reward:0.5},
+  {q:"12×12", a:"144", reward:1},
+  {q:"Square root of 81?", a:"9", reward:1},
+  {q:"Who discovered gravity?", a:"newton", reward:2}
+];
+
+let current;
+let timeLeft = 10;
+let timer;
+
+// Load balance
+let balance = localStorage.getItem("stc") || 0;
+document.getElementById("balance").innerText = balance;
+
+// Start question
+function startQuiz() {
+  current = questions[Math.floor(Math.random()*questions.length)];
+  document.getElementById("question").innerText = current.q;
+  document.getElementById("result").innerText = "";
+  document.getElementById("answer").value = "";
+
+  timeLeft = 10;
+  startTimer();
+}
+
+// Timer (anti-cheat)
+function startTimer() {
+  clearInterval(timer);
+  timer = setInterval(() => {
+    document.getElementById("timer").innerText = "Time: " + timeLeft;
+    timeLeft--;
+
+    if(timeLeft < 0) {
+      clearInterval(timer);
+      document.getElementById("result").innerText = "❌ Time up!";
+    }
+  }, 1000);
+}
+
+// Submit answer
+function submitAnswer() {
+  clearInterval(timer);
+
+  let userAnswer = document.getElementById("answer").value.toLowerCase();
+
+  if(userAnswer === current.a) {
+    balance = parseFloat(balance) + current.reward;
+    localStorage.setItem("stc", balance);
+
+    document.getElementById("result").innerText = 
+      "✅ Correct! +" + current.reward + " STC";
+
+  } else {
+    document.getElementById("result").innerText = "❌ Wrong!";
+  }
+
+  document.getElementById("balance").innerText = balance;
+}
+
+</script>
+
+</body>
+</html>
 
 
 
