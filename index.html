@@ -1,37 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyCoin | Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background-color: #0f172a; font-family: sans-serif; }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-6 text-white">
+    <div class="glass w-full max-w-[350px] rounded-[30px] p-8 shadow-2xl">
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-yellow-400 tracking-tight">StudyCoin</h1>
+            <p class="text-slate-400 text-sm mt-2">Login to your wallet</p>
+        </div>
 
+        <form id="loginForm" class="space-y-4">
+            <input type="email" id="email" placeholder="Email" required 
+                class="w-full bg-slate-800 border border-slate-700 rounded-2xl px-5 py-4 focus:border-yellow-400 outline-none transition-all">
+            
+            <input type="password" id="password" placeholder="Password" required 
+                class="w-full bg-slate-800 border border-slate-700 rounded-2xl px-5 py-4 focus:border-yellow-400 outline-none transition-all">
+            
+            <button type="submit" 
+                class="w-full bg-yellow-400 text-black font-bold py-4 rounded-2xl hover:bg-yellow-300 active:scale-95 transition-all">
+                Sign In
+            </button>
+        </form>
+    </div>
 
-
-  
-  
-  
-
-
-
-📚 StudyCoin
-
-
-
-  
-Login
-
-  
-  Login
-
-
-
-
-  
-Dashboard
-
-  
-Welcome 
-
-  
-Coins: 0
-
-  Earn 10 Coins
-
-
-
-
-
+    <script type="module" src="auth.js"></script>
+</body>
+</html>
