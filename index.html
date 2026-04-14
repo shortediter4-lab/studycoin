@@ -38,3 +38,42 @@
    <script src="script.js"></script> 
 </body>
 </html>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "YOUR_KEY",
+  authDomain: "YOUR_DOMAIN",
+  projectId: "YOUR_ID",
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+window.signup = function () {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  createUserWithEmailAndPassword(auth, email, password)
+    .then(() => {
+      document.getElementById("message").innerText = "Signup success";
+    })
+    .catch((error) => {
+      document.getElementById("message").innerText = error.message;
+    });
+};
+
+window.login = function () {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  signInWithEmailAndPassword(auth, email, password)
+    .then(() => {
+      document.getElementById("message").innerText = "Login success";
+    })
+    .catch((error) => {
+      document.getElementById("message").innerText = error.message;
+    });
+};
+</script>
