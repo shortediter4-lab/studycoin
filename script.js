@@ -36,3 +36,4 @@ function handleAuth() {
     }
 }
 
+<script src="script.js"></script>
