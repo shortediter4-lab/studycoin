@@ -24,10 +24,12 @@ function handleAuth() {
         const savedPass = localStorage.getItem(email);
         if (savedPass === pass) {
             alert("Success! Welcome to StudyCoin.");
-            // Add your dashboard link here later
+            window.location.href = "dashboard.html";
+
         } else {
             alert("Account not found or wrong password.");
-        }
+        }window.location.href = "dashboard.html";
+
     } else {
         // Save user to browser memory
         localStorage.setItem(email, pass);
