@@ -1,4 +1,20 @@
-let isLoggingIn = true;
+function login() {
+  const provider = new firebase.auth.GoogleAuthProvider();
+
+  auth.signInWithPopup(provider)
+    .then((result) => {
+      document.getElementById("user").innerText =
+        "Welcome " + result.user.displayName;
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+
+function logout() {
+  auth.signOut();
+  document.getElementById("user").innerText = "";
+}let isLoggingIn = true;
 
 function toggleForm() {
     isLoggingIn = !isLoggingIn;
