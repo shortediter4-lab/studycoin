@@ -57,5 +57,4 @@ function handleAuth() {
         // Save user to browser memory
         localStorage.setItem(email, pass);
         alert("Account Created! You can now log in.");
-        toggleForm(); // Switch back to login mode
-    
+
