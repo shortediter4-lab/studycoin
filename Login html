@@ -1,33 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>StudyCoin Login</title>
 
   <style>
-    body {
+    * {
       margin: 0;
+      padding: 0;
+      box-sizing: border-box;
       font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #1e3c72, #2a5298);
-      height: 100vh;
+    }
+
+    html, body {
+      height: 100%;
+      width: 100%;
+    }
+
+    body {
       display: flex;
       justify-content: center;
       align-items: center;
+      background: linear-gradient(135deg, #141e30, #243b55);
     }
 
-    .login-card {
-      background: white;
+    .login {
+      width: 340px;
       padding: 30px;
-      width: 320px;
       border-radius: 15px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      background: white;
       text-align: center;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.4);
     }
 
-    .login-card h2 {
+    .login h2 {
       margin-bottom: 20px;
-      color: #1e3c72;
+      color: #243b55;
     }
 
     input {
@@ -37,77 +46,36 @@
       border: 1px solid #ccc;
       border-radius: 8px;
       outline: none;
-      transition: 0.3s;
-    }
-
-    input:focus {
-      border-color: #2a5298;
-      box-shadow: 0 0 5px rgba(42,82,152,0.5);
     }
 
     button {
       width: 100%;
       padding: 12px;
-      background: #2a5298;
-      color: white;
+      margin-top: 10px;
       border: none;
       border-radius: 8px;
+      background: #243b55;
+      color: white;
       font-size: 16px;
       cursor: pointer;
-      transition: 0.3s;
     }
 
     button:hover {
-      background: #1e3c72;
-    }
-
-    .small-text {
-      margin-top: 10px;
-      font-size: 12px;
-      color: gray;
+      background: #141e30;
     }
   </style>
 </head>
 
 <body>
 
-  <div class="login-card">
+  <div class="login">
     <h2>🔐 StudyCoin Login</h2>
 
-    <input type="email" id="email" placeholder="Enter Email" />
-    <input type="password" id="password" placeholder="Enter Password" />
+    <input type="email" id="email" placeholder="Email">
+    <input type="password" id="password" placeholder="Password">
 
     <button id="loginBtn">Login</button>
-
-    <div class="small-text">Secure Firebase Login System</div>
   </div>
 
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-    const firebaseConfig = {
-      apiKey: "YOUR_API_KEY",
-      authDomain: "YOUR_AUTH_DOMAIN",
-      projectId: "YOUR_PROJECT_ID"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-
-    document.getElementById("loginBtn").addEventListener("click", () => {
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
-
-      signInWithEmailAndPassword(auth, email, password)
-        .then(() => {
-          alert("Login Successful 🚀");
-          window.location.href = "dashboard.html";
-        })
-        .catch(err => {
-          alert(err.message);
-        });
-    });
-  </script>
-
-
+</body>
+</html>
