@@ -263,3 +263,36 @@ document.getElementById("loginBtn").addEventListener("click", () => {
     });
 });
 </script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+// ✅ YOUR FIREBASE CONFIG (already correct)
+const firebaseConfig = {
+  apiKey: "AIzaSyAdSDs1QtO2lai8DzA4JxvKg7Nf1lDk5EI",
+  authDomain: "studycoin-stc.firebaseapp.com",
+  databaseURL: "https://studycoin-stc-default-rtdb.firebaseio.com",
+  projectId: "studycoin-stc",
+  storageBucket: "studycoin-stc.firebasestorage.app",
+  messagingSenderId: "840351904766",
+  appId: "1:840351904766:web:7ec85a6e8d2cdfa4c246af"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+// 🔥 LOGIN BUTTON
+document.getElementById("loginBtn").addEventListener("click", async () => {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
+    alert("Login successful ✅");
+    window.location.href = "dashboard.html";
+  } catch (error) {
+    alert(error.message);
+    console.log(error.code);
+  }
+});
+</script>
