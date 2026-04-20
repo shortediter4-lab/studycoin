@@ -3,216 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StudyCoin - Learn, Play & Earn</title>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <title>StudyCoin Login</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Arial, sans-serif; background: linear-gradient(135deg, #0f172a, #1e2937); color: #e2e8f0; line-height: 1.6; }
-        header { padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; background: rgba(15, 23, 42, 0.95); position: sticky; top: 0; z-index: 100; }
-        .logo { font-size: 28px; font-weight: bold; color: #22d3ee; }
-        .auth-btn { padding: 10px 22px; background: #22d3ee; color: #0f172a; border: none; border-radius: 50px; font-weight: bold; cursor: pointer; }
-        .hero { text-align: center; padding: 100px 20px; background: url('https://source.unsplash.com/random/1600x900/?study,education') no-repeat center/cover; position: relative; }
-        .hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15, 23, 42, 0.75); }
-        .hero-content { position: relative; max-width: 900px; margin: 0 auto; }
-        .hero h1 { font-size: 3rem; margin-bottom: 20px; color: #67e8f9; }
-        section { padding: 60px 5%; }
-        h2 { text-align: center; font-size: 2.3rem; margin-bottom: 40px; color: #67e8f9; }
-        .dashboard { background: #1e2937; border-radius: 16px; padding: 30px; margin: 20px 0; display: none; }
-        .balance { font-size: 1.8rem; color: #67e8f9; margin: 20px 0; }
-        .quiz { background: #334155; padding: 25px; border-radius: 12px; margin: 20px 0; }
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 200; align-items: center; justify-content: center; }
-        .modal-content { background: #1e2937; padding: 40px; border-radius: 20px; width: 90%; max-width: 420px; text-align: center; position: relative; }
-        .close { position: absolute; top: 15px; right: 25px; font-size: 32px; cursor: pointer; color: #94a3b8; }
-        input { width: 100%; padding: 14px; margin: 12px 0; border-radius: 8px; border: none; background: #334155; color: #e2e8f0; }
-        button.submit { width: 100%; padding: 14px; margin: 12px 0; border: none; border-radius: 12px; background: #22d3ee; color: #0f172a; font-weight: bold; cursor: pointer; }
+        body { font-family: Arial, sans-serif; text-align: center; padding-top: 50px; background: #121212; color: white; }
+        .login-card { background: #1e1e1e; padding: 30px; border-radius: 15px; display: inline-block; width: 300px; }
+        input { width: 90%; padding: 10px; margin: 10px 0; border-radius: 5px; border: none; }
+        button { width: 95%; padding: 10px; background: #22d3ee; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        #msg { margin-top: 15px; font-size: 14px; }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="logo">StudyCoin</div>
-        <button class="auth-btn" id="authBtn">Login / Signup</button>
-    </header>
-
-    <section class="hero">
-        <div class="hero-content">
-            <h1>Learn • Play • Earn StudyCoin</h1>
-            <p>Study smarter and earn points that will convert to STC token at launch (End 2027)</p>
-            <button class="submit" id="startBtn" style="margin-top:30px;">Start Studying</button>
-        </div>
-    </section>
-
-    <!-- Dashboard -->
-    <section id="dashboardSection" class="dashboard">
-        <h2>Your Study Dashboard</h2>
-        <div class="balance">Balance: <span id="coinBalance">0</span> Points (→ STC later)</div>
-        
-        <div class="quiz">
-            <h3>Quiz 1: What is 2 + 2?</h3>
-            <button onclick="answerQuiz(0, 1)" style="margin:5px;padding:10px 20px;">3</button>
-            <button onclick="answerQuiz(0, 1)" style="margin:5px;padding:10px 20px;">4</button>
-            <button onclick="answerQuiz(0, 1)" style="margin:5px;padding:10px 20px;">5</button>
-            <p id="result0"></p>
-        </div>
-
-        <div class="quiz">
-            <h3>Quiz 2: Capital of Pakistan?</h3>
-            <button onclick="answerQuiz(1, 1)" style="margin:5px;padding:10px 20px;">Lahore</button>
-            <button onclick="answerQuiz(1, 1)" style="margin:5px;padding:10px 20px;">Islamabad</button>
-            <button onclick="answerQuiz(1, 1)" style="margin:5px;padding:10px 20px;">Karachi</button>
-            <p id="result1"></p>
-        </div>
-
-        <button onclick="logout()" style="background:#ef4444;color:white;padding:12px 24px;border:none;border-radius:8px;cursor:pointer;margin-top:20px;">Logout</button>
-    </section>
-
-    <!-- Auth Modal -->
-    <div class="modal" id="authModal">
-        <div class="modal-content">
-            <span class="close" id="closeModal">&times;</span>
-            <h3 id="modalTitle">Login to StudyCoin</h3>
-            
-            <input type="email" id="email" placeholder="Your Email">
-            <input type="password" id="password" placeholder="Password (min 6 chars)">
-            <button class="submit" id="authSubmit">Login</button>
-            <button class="submit" id="switchMode" style="background:#475569;">Create New Account</button>
-            <p id="authMessage" style="margin-top:15px; font-size:0.9rem;color:#f87171;"></p>
-        </div>
+    <div class="login-card">
+        <h2>StudyCoin Login</h2>
+        <input type="email" id="email" placeholder="Email" required>
+        <input type="password" id="password" placeholder="Password" required>
+        <button id="loginBtn">Login</button>
+        <button id="signupBtn" style="background: #444; margin-top: 10px;">Create Account</button>
+        <p id="msg"></p>
     </div>
 
-    <footer style="text-align:center;padding:40px;background:#0f172a;">
-        <p>StudyCoin © 2026 • Points will convert to STC at end of 2027</p>
-    </footer>
+    <script type="module">
+        // 1. Import Firebase
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-    <script>
-        // 🔥 REPLACE THIS WITH YOUR REAL FIREBASE CONFIG (from Firebase Console)
+        // 2. Your Correct Configuration
         const firebaseConfig = {
-            apiKey: "YOUR_API_KEY_HERE",
-            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-            databaseURL: "https://YOUR_PROJECT_ID-default-rtdb.firebaseio.com",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_PROJECT_ID.appspot.com",
-            messagingSenderId: "123456789012",
-            appId: "1:123456789012:web:xxxxxxxxxxxxxxxxxxxx"
+            apiKey: "AIzaSyADsDs1QtO2lai8DzA4JxvKg7Nf1lDk5E",
+            authDomain: "studycoin-stc.firebaseapp.com",
+            projectId: "studycoin-stc",
+            storageBucket: "studycoin-stc.firebasestorage.app",
+            messagingSenderId: "840351904766",
+            appId: "1:840351904766:web:7ec85a6e8d2cdfa4c246af"
         };
 
-        firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const database = firebase.database();
+        // 3. Initialize
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
 
-        let currentUser = null;
-        let answered = [false, false];
+        const msg = document.getElementById('msg');
 
-        const authModal = document.getElementById('authModal');
-        const dashboard = document.getElementById('dashboardSection');
-        const authBtn = document.getElementById('authBtn');
-        let isLoginMode = true;
-
-        function showAuthModal() {
-            authModal.style.display = "flex";
-            document.getElementById('modalTitle').textContent = isLoginMode ? "Login" : "Sign Up";
-            document.getElementById('authSubmit').textContent = isLoginMode ? "Login" : "Create Account";
-            document.getElementById('authMessage').textContent = '';
-        }
-
-        authBtn.addEventListener('click', showAuthModal);
-        document.getElementById('startBtn').addEventListener('click', () => {
-            if (currentUser) dashboard.style.display = "block";
-            else showAuthModal();
-        });
-        document.getElementById('closeModal').addEventListener('click', () => authModal.style.display = "none");
-
-        document.getElementById('switchMode').addEventListener('click', () => {
-            isLoginMode = !isLoginMode;
-            document.getElementById('modalTitle').textContent = isLoginMode ? "Login" : "Sign Up";
-            document.getElementById('authSubmit').textContent = isLoginMode ? "Login" : "Create Account";
+        // SIGN UP FUNCTION
+        document.getElementById('signupBtn').addEventListener('click', () => {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            createUserWithEmailAndPassword(auth, email, password)
+                .then(() => { msg.innerText = "Account Created!"; msg.style.color = "green"; })
+                .catch((err) => { msg.innerText = err.message; msg.style.color = "red"; });
         });
 
-        document.getElementById('authSubmit').addEventListener('click', () => {
-            const email = document.getElementById('email').value.trim();
-            const password = document.getElementById('password').value.trim();
-            const msg = document.getElementById('authMessage');
+        // LOGIN FUNCTION
+        document.getElementById('loginBtn').addEventListener('click', () => {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
 
-            if (!email || password.length < 6) {
-                msg.textContent = "Email required, password min 6 characters";
-                return;
-            }
-
-            msg.textContent = "Processing...";
-
-            if (isLoginMode) {
-                auth.signInWithEmailAndPassword(email, password)
-                    .then(cred => {
-                        currentUser = cred.user;
-                        authModal.style.display = "none";
-                        loadUserData();
-                        dashboard.style.display = "block";
-                        authBtn.textContent = "Dashboard";
-                    })
-                    .catch(err => msg.textContent = err.message);
-            } else {
-                auth.createUserWithEmailAndPassword(email, password)
-                    .then(cred => {
-                        currentUser = cred.user;
-                        database.ref('users/' + currentUser.uid).set({ points: 0, email: email, createdAt: Date.now() });
-                        authModal.style.display = "none";
-                        loadUserData();
-                        dashboard.style.display = "block";
-                        authBtn.textContent = "Dashboard";
-                    })
-                    .catch(err => msg.textContent = err.message);
-            }
-        });
-
-        function loadUserData() {
-            if (!currentUser) return;
-            database.ref('users/' + currentUser.uid + '/points').on('value', (snap) => {
-                const points = snap.val() || 0;
-                document.getElementById('coinBalance').textContent = points;
-            });
-        }
-
-        function answerQuiz(quizIndex, correctIndex) {
-            if (answered[quizIndex]) {
-                alert("You already answered this quiz!");
-                return;
-            }
-            const userChoice = parseInt(prompt("Enter choice number (0, 1 or 2):"));
-            if (isNaN(userChoice)) return;
-
-            if (userChoice === correctIndex) {
-                database.ref('users/' + currentUser.uid).transaction(data => {
-                    if (data) data.points = (data.points || 0) + 10;
-                    return data;
-                });
-                document.getElementById('result' + quizIndex).innerHTML = "✅ Correct! +10 Points";
-                answered[quizIndex] = true;
-            } else {
-                document.getElementById('result' + quizIndex).innerHTML = "❌ Wrong. Try again later.";
-            }
-        }
-
-        function logout() {
-            auth.signOut().then(() => {
-                currentUser = null;
-                dashboard.style.display = "none";
-                authBtn.textContent = "Login / Signup";
-                answered = [false, false];
-                document.getElementById('result0').innerHTML = '';
-                document.getElementById('result1').innerHTML = '';
-            });
-        }
-
-        auth.onAuthStateChanged(user => {
-            if (user) {
-                currentUser = user;
-                authBtn.textContent = "Dashboard";
-                loadUserData();
-            }
+            signInWithEmailAndPassword(auth, email, password)
+                .then(() => { msg.innerText = "Login Successful!"; msg.style.color = "green"; })
+                .catch((err) => { msg.innerText = err.message; msg.style.color = "red"; });
         });
     </script>
-<script type="module" src="script.js"></script>
 </body>
-  </html>
+</html>
+
