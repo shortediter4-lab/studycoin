@@ -23,7 +23,7 @@ import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword }
 from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAdSDs1QtO2lai8DzA4JxvKg7Nf1lDk5EI",
+  apiKey:"AIzaSyADsDs1QtO2lai8DzA4JxvKg7Nf1lDk5E",
   authDomain: "studycoin-stc.firebaseapp.com",
   projectId: "studycoin-stc",
   appId: "1:840351904766:web:7ec85a6e8d2cdfa4c246af"
