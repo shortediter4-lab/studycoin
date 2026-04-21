@@ -1,1 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>StudyCoin Lite</title>
+<style>
+body{font-family:Arial;background:#0f172a;color:white;text-align:center;padding:20px}
+.card{background:#1f2937;padding:20px;border-radius:10px;margin:10px auto;max-width:400px}
+input,button{padding:10px;width:90%;margin:5px;border-radius:8px;border:none}
+button{background:#38bdf8;font-weight:bold;cursor:pointer}
+</style>
+</head>
+<body>
 
+<h1>🚀 StudyCoin Lite</h1>
+
+<div class="card">
+<h3>Login (Demo)</h3>
+<input id="user" placeholder="Enter username">
+<button onclick="login()">Login</button>
+<p id="welcome"></p>
+</div>
+
+<div class="card">
+<h3>Quiz</h3>
+<p id="q">2 + 2 = ?</p>
+<input id="a" placeholder="Answer">
+<button onclick="check()">Submit</button>
+<p id="res"></p>
+</div>
+
+<div class="card">
+<h3>Wallet</h3>
+<p>Coins: <span id="c">0</span></p>
+<button onclick="bonus()">Daily Bonus</button>
+</div>
+
+<script>
+let coins = 0;
+let user = "";
+
+function login(){
+user = document.getElementById("user").value;
+if(!user) return alert("Enter name");
+document.getElementById("welcome").innerText = "Welcome " + user;
+coins = localStorage.getItem(user) || 0;
+update();
+}
+
+function check(){
+let ans = document.getElementById("a").value;
+if(ans == "4"){
+coins = Number(coins) + 10;
+document.getElementById("res").innerText = "Correct +10";
+}else{
+document.getElementById("res").innerText = "Wrong";
+}
+save();
+update();
+}
+
+function bonus(){
+coins = Number(coins) + 5;
+save();
+update();
+}
+
+function save(){
+localStorage.setItem(user, coins);
+}
+
+function update(){
+document.getElementById("c").innerText = coins;
+}
+</script>
+
+</body>
+</html>
